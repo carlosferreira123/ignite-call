@@ -18,16 +18,15 @@ export default function Home() {
         </Hero>
 
         <Preview>
-
-        </Preview>
-        <Image
+         <Image
          src={previewImage}
          height={400}
          quality={100}
          priority
          alt='Calendario'
          
-        />
+         />
+        </Preview>
     </Container>
  )
 }
