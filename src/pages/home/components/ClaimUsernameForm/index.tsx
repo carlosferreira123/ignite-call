@@ -12,7 +12,7 @@ export function ClaimUsernameForm() {
         <Button 
          size="sm" type="submit">
            Reservar usuario 
-            
+            <AbortController/>
         </Button>
     </Form>
 }
