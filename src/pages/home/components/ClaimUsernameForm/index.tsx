@@ -4,13 +4,13 @@ import { ArrowRight} from "phosphor-react";
 
 export function ClaimUsernameForm() {
   return (
-    <Form>
-        <TextInput size="sm" prefix="ignite.com" placeholder="seu-usuario"
-        />
+    <Form as = "form">
+        <TextInput size="sm" prefix="ignite.com" placeholder="seu-usuario"/>
         <Button 
          size="sm" type="submit">
            Reservar usuario 
             <ArrowRight/>
         </Button>
     </Form>
+)
 }
