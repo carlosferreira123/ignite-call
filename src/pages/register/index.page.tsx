@@ -2,17 +2,57 @@ import { Button, Heading, MultiStep, Text, TextInput } from "@ignite-ui/react";
 import { Container, Header, Form, FormError } from "./styles";
 
 import { ArrowRight } from "phosphor-react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "@/lib/axios";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 
 
+const registerFormSchema = z.object({
+    username: z.string().min(3, { message: 'O usuario precisa ter pelo menos 3 letras.' })
+        .regex(/^([a-z\\-]+)$/i, { message: 'O usuario pode ter apenas letras e hifens.' })
+        .transform((username) => username.toLowerCase()),
+    name: z.string().min(3, { message: 'O nome precisa ter pelo menos 3 letras.' }),
+})
+
+type RegisterFormData = z.infer<typeof registerFormSchema>
 
 
 export default function Register() {
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors, isSubmitting }, } = useForm<RegisterFormData>({
+            resolver: zodResolver(registerFormSchema),
+        })
 
 
+    const router = useRouter()
+
+
+    useEffect(() => {
+        if (router.query.username) {
+            setValue('username', String(router.query.username))
+        }
+    }, [router.query?.username, setValue])
 
 
     async function handleRegister(data: RegisterFormData) {
-
+        try {
+            await api.post('/users', {
+                name: data.name,
+                username: data.username,
+            })
+        } catch (err) {
+            if (err instanceof AxiosError && err?.response?.data?.message) {
+                alert(err.response.data.message)
+            }
+            console.error(err)
+        }
     }
 
     return (
@@ -29,7 +69,7 @@ export default function Register() {
 
             </Header>
 
-            <Form as="form">
+            <Form as="form" onSubmit={handleSubmit(handleRegister)}>
                 <label>
                     <Text size="sm">Nome de usuario</Text>
                     <TextInput prefix="ignite.com/" placeholder="seu-usuario"{...register('username')} />
