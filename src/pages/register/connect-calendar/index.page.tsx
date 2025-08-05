@@ -1,5 +1,5 @@
 import { Button, Heading, MultiStep, Text, } from "@ignite-ui/react";
-import { Container, Header } from "../styles";
+import { Container, Header, } from "../styles";
 
 import { ArrowRight } from "phosphor-react";
 import { ConnectBox, ConnectItem } from "./styles";

@@ -2,8 +2,7 @@ import { Box, styled } from "@ignite-ui/react"
 
 export const ConnectBox = styled(Box, {
     marginTop: '$6',
-    display: 'flex',
-    flexdirection: 'column',
+
 })
 
 export const ConnectItem = styled('div', {
